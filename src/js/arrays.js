@@ -6,6 +6,10 @@
 */
 function forEach(array, callback) {
 
+  for (let i = 0; i < array.length; i ++) {
+     callback (array[i], i, array) 
+  }
+
 }
 
 /* Функция принимает в себе первым аргументом массив, вторым функцию которая будет вызываться для каждого элемента массива
@@ -16,6 +20,13 @@ function forEach(array, callback) {
 */
 function map(array, callback) {
 
+  let newArray = [];
+
+  for(let i = 0; i < array.length; i++) {
+    newArray.push(callback(array[i], i, array))
+  }
+
+  return newArray; 
 }
 
 /* Функция принимает в себе первым аргументом массив, вторым функцию которая будет вызываться для каждого элемента массива
@@ -26,6 +37,18 @@ function map(array, callback) {
 */
 function filter(array, callback) {
 
+  let newArray = [];
+
+  for (let i = 0; i < array.length; i++) {
+    
+    if (callback(array[i], i, array) === true) {
+      newArray.push(array[i])
+    }
+    
+  }
+
+  return newArray;
+ 
 }
 
 /* Функция принимает в себе первым аргументом массив, вторым функцию которая будет вызываться для каждого элемента массива, 3 аргумент изначальный вариант
@@ -39,17 +62,27 @@ function filter(array, callback) {
 */
 function reduce(array, callback, initialValue) {
 
+  let result = initialValue;
+  let newValue;
+
+  
+
+  for(let i = 0; i < array.length; i++) {
+    
+    
+    result = callback(accumulator(), array[i], i, array) 
+
+    function accumulator () {
+      newValue = result; 
+      return newValue
+    }
+
+  }
+
+  return result
+ 
 }
 
-/* Функция принимает в себе первым аргументом массив, вторым функцию которая будет вызываться для каждого элемента массива
- вот документация https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some
- Это используется для удобного быстрого перебора массива. Функция должна ВЕРНУТЬ true или false. Если хотя бы для одного элемента callback вернет false, то вся функция возвращает false/
- Фишка задания сделать свою реализацию, чтобы понять, как он работает под капотом. Для перебора советую использовать for цикл
- Помните, что вы передаете функцию, которая ожидает 3 аргумента, текущий элемент, индекс и сам массив. Автоматическая проверка будет это учитывать.
-*/
-function some(array, callback) {
-
-}
 
 /* Функция принимает в себе первым аргументом массив, вторым функцию которая будет вызываться для каждого элемента массива
  вот документация https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some
@@ -57,7 +90,48 @@ function some(array, callback) {
  Фишка задания сделать свою реализацию, чтобы понять, как он работает под капотом. Для перебора советую использовать for цикл
  Помните, что вы передаете функцию, которая ожидает 3 аргумента, текущий элемент, индекс и сам массив. Автоматическая проверка будет это учитывать.
 */
+function some(array, callback) {
+
+  let result;
+
+  for (let i = 0; i < array.length; i ++) {
+
+   if (callback(array[i], i, array) === true){
+      result = true;
+      break;
+   } else if (callback(array[i], i, array) === false) {
+     result = false;
+   }
+
+  }
+
+  return result;
+
+}
+
+
+/* Функция принимает в себе первым аргументом массив, вторым функцию которая будет вызываться для каждого элемента массива
+ вот документация https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some
+ Это используется для удобного быстрого перебора массива. Функция должна ВЕРНУТЬ true или false. Если хотя бы для одного элемента callback вернет false, то вся функция возвращает false/
+ Фишка задания сделать свою реализацию, чтобы понять, как он работает под капотом. Для перебора советую использовать for цикл
+ Помните, что вы передаете функцию, которая ожидает 3 аргумента, текущий элемент, индекс и сам массив. Автоматическая проверка будет это учитывать.
+*/
 function every(array, callback) {
+
+  let result;
+
+  for(let i = 0; i < array.length; i ++) {
+
+    if (callback(array[i], i, array) === false) {
+      result = false;
+      break;
+    } else if (callback(array[i], i, array) === true) {
+      result = true;
+    }
+
+  }
+
+  return result;
 
 }
 
